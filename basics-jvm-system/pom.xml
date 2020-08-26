@@ -13,6 +13,7 @@
     <version>1.0-SNAPSHOT</version>
     <modules>
         <module>cpu-jvm</module>
+        <module>jdk-collection</module>
     </modules>
     <packaging>pom</packaging>
     <description>jvm 虚拟机相关知识</description>

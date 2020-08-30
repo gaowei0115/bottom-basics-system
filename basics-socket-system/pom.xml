@@ -11,8 +11,27 @@
 
     <artifactId>basics-socket-system</artifactId>
     <version>1.0-SNAPSHOT</version>
+    <modules>
+        <module>netty-system</module>
+    </modules>
+    <properties>
+        <netty.version>4.1.30.Final</netty.version>
+        <guava.version>27.0.1-jre</guava.version>
+    </properties>
     <packaging>pom</packaging>
     <description>网络编程socket</description>
 
+    <dependencies>
+        <dependency>
+            <groupId>io.netty</groupId>
+            <artifactId>netty-all</artifactId>
+            <version>${netty.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.google.guava</groupId>
+            <artifactId>guava</artifactId>
+            <version>${guava.version}</version>
+        </dependency>
+    </dependencies>
 
 </project>

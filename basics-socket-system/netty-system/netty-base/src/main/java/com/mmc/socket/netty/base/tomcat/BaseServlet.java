@@ -13,7 +13,7 @@ import com.mmc.socket.netty.base.tomcat.io.core.IoResponse;
  */
 public abstract class BaseServlet {
 
-    public void service(IoRequest request, IoResponse response) throws Exception {
+    public void service(Request request, Response response) throws Exception {
         // service 根据请求方法（get, post） 选择调用doGet or doPost
         if (HttpMethod.HTTP_GET.getMethod().equals(request.getMethod())) {
             doGet(request, response);
@@ -29,7 +29,7 @@ public abstract class BaseServlet {
      * @param response
      *          响应对象
      */
-    protected abstract void doPost(IoRequest request, IoResponse response) throws Exception;
+    protected abstract void doPost(Request request, Response response) throws Exception;
 
     /**
      * get请求处理
@@ -38,6 +38,6 @@ public abstract class BaseServlet {
      * @param response
      *      响应对象
      */
-    protected abstract void doGet(IoRequest request, IoResponse response) throws Exception;
+    protected abstract void doGet(Request request, Response response) throws Exception;
 
 }

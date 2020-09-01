@@ -1,5 +1,7 @@
 package com.mmc.socket.netty.base.tomcat.io.servlet;
 
+import com.mmc.socket.netty.base.tomcat.Request;
+import com.mmc.socket.netty.base.tomcat.Response;
 import com.mmc.socket.netty.base.tomcat.io.core.IoRequest;
 import com.mmc.socket.netty.base.tomcat.io.core.IoResponse;
 import com.mmc.socket.netty.base.tomcat.io.core.IoServlet;
@@ -13,12 +15,12 @@ import com.mmc.socket.netty.base.tomcat.io.core.IoServlet;
  */
 public class SecondIoServlet extends IoServlet {
     @Override
-    protected void doPost(IoRequest request, IoResponse response) throws Exception {
+    protected void doPost(Request request, Response response) throws Exception {
         response.write("this is the second Servlet");
     }
 
     @Override
-    protected void doGet(IoRequest request, IoResponse response) throws Exception {
+    protected void doGet(Request request, Response response) throws Exception {
         this.doPost(request, response);
     }
 }

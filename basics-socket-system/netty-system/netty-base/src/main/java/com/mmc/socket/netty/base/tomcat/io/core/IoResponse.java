@@ -22,6 +22,7 @@ public class IoResponse implements Response {
         this.os = os;
     }
 
+    @Override
     public void write(String content) throws Exception {
         // 输出也要遵守Http
         // 状态码200

@@ -36,6 +36,8 @@ public class IoRequest implements Request {
         }
     }
 
+
+    @Override
     public String getMethod() {
         return method;
     }
@@ -44,6 +46,7 @@ public class IoRequest implements Request {
         this.method = method;
     }
 
+    @Override
     public String getUrl() {
         return url;
     }

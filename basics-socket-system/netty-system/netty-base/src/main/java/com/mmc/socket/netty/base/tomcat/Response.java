@@ -10,4 +10,6 @@ import java.io.Serializable;
  * @history: (version) author date desc
  */
 public interface Response extends Serializable {
+
+    void write(String content) throws Exception;
 }

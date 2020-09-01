@@ -67,6 +67,8 @@ public class IoTomcatMain {
                 Socket client = server.accept();
                 // 3. http请求处理
                 process(client);
+                // 模拟服务处理耗时
+                Thread.sleep(10000);
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -74,6 +76,7 @@ public class IoTomcatMain {
     }
 
     private void process(Socket client) throws Exception {
+        System.out.println("local address " + client.getLocalAddress().getHostAddress() + " \n一个连接已创建 \n remote info " + client.getRemoteSocketAddress());
         InputStream is = client.getInputStream();
         OutputStream os = client.getOutputStream();
 

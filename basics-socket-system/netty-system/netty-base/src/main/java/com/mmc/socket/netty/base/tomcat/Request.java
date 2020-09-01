@@ -10,4 +10,8 @@ import java.io.Serializable;
  * @history: (version) author date desc
  */
 public interface Request extends Serializable {
+
+    String getMethod();
+
+    String getUrl();
 }

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+
+	<!-- 控制台输出 -->
+	<appender name="consoleLog" class="ch.qos.logback.core.ConsoleAppender">
+		<Encoding>UTF-8</Encoding>
+		<layout class="ch.qos.logback.classic.PatternLayout">
+			<pattern>[netty-rpc-code]%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level - [%logger{50}] - %msg%n</pattern>
+		</layout>
+	</appender>
+	
+	<!--异步映射配置开始-->
+	<appender name ="asyncConsoleLog" class= "ch.qos.logback.classic.AsyncAppender">  
+		<discardingThreshold >0</discardingThreshold>  
+		<queueSize>256</queueSize>  
+		<appender-ref ref ="consoleLog"/>  
+	</appender>
+	<!-- 根logger的设置-->     
+	<root>
+		<priority value ="DEBUG"/><!--控制台日志监测到info级别 -->
+		<appender-ref ref="asyncConsoleLog"/><!--输出到控制台 -->
+	</root>
+</configuration>

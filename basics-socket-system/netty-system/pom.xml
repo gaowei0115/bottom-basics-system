@@ -12,6 +12,7 @@
     <description>netty 相关知识</description>
     <modules>
         <module>netty-base</module>
+        <module>netty-rpc</module>
     </modules>
     <artifactId>netty-system</artifactId>
 

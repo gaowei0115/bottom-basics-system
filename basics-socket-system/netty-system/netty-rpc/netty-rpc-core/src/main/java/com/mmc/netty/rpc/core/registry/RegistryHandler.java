@@ -38,7 +38,7 @@ public class RegistryHandler extends ChannelInboundHandlerAdapter {
 
     public RegistryHandler() {
         // 扫描provider服务类
-        scannerClass("com.mmc.netty.rpc.code.provide");
+        scannerClass("com.mmc.netty.rpc.core.provide");
         doRegistry();
     }
 
@@ -48,7 +48,7 @@ public class RegistryHandler extends ChannelInboundHandlerAdapter {
         Object result = new Object();
         if (registryMap.containsKey(protocol.getClassName())) {
             Object clazz = registryMap.get(protocol.getClassName());
-            Method method = clazz.getClass().getMethod(protocol.getMethodName());
+            Method method = clazz.getClass().getMethod(protocol.getMethodName(), protocol.getParamTypes());
             result = method.invoke(clazz, protocol.getParams());
         }
         ctx.write(result);
@@ -87,7 +87,7 @@ public class RegistryHandler extends ChannelInboundHandlerAdapter {
         if (dirFile.isFile()) {
             return;
         }
-        logger.debug(" >> {}", dirFile.length());
+        logger.debug(" >> {}", dirFile.listFiles().length);
         for (File file : dirFile.listFiles()) {
             if (file.isDirectory()) {
                 scannerClass(s + "." + file.getName());
@@ -95,5 +95,10 @@ public class RegistryHandler extends ChannelInboundHandlerAdapter {
                 classNames.add(s + "." + file.getName().replace(".class", "").trim());
             }
         }
+    }
+
+    public static void main(String[] args) {
+        RegistryHandler handler = new RegistryHandler();
+        handler.scannerClass("com.mmc.netty.rpc.core.provide");
     }
 }

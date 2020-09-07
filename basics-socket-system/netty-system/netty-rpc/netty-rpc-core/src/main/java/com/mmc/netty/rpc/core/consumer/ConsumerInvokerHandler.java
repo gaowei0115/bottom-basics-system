@@ -37,11 +37,17 @@ public class ConsumerInvokerHandler implements InvocationHandler {
 
     @Override
     public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
-        if (Object.class.equals(clazz.getDeclaredClasses())) {
-            return method.invoke(this, args);
-        } else {
-            return rpcInvoker(proxy, method, args);
+        try {
+            logger.info("参数验证结果 {} ", Object.class.equals(method.getDeclaringClass()));
+            if (Object.class.equals(method.getDeclaringClass())) {
+                return method.invoke(this, args);
+            } else {
+                return rpcInvoker(proxy, method, args);
+            }
+        } catch (Exception e) {
+            logger.error("代理执行异常", e);
         }
+        return null;
     }
 
     private Object rpcInvoker(Object proxy, Method method, Object[] args) {
@@ -61,9 +67,9 @@ public class ConsumerInvokerHandler implements InvocationHandler {
                         @Override
                         protected void initChannel(SocketChannel ch) throws Exception {
                             ChannelPipeline pipeline = ch.pipeline();
-                            pipeline.addLast(new LengthFieldBasedFrameDecoder(Integer.MAX_VALUE, 0, 4, 0, 4));
+                            pipeline.addLast("frameDecoder", new LengthFieldBasedFrameDecoder(Integer.MAX_VALUE, 0, 4, 0, 4));
 
-                            pipeline.addLast("frameDecoder", new LengthFieldPrepender(4));
+                            pipeline.addLast("frameEncoder", new LengthFieldPrepender(4));
 
                             pipeline.addLast("encoder", new ObjectEncoder());
                             pipeline.addLast("decoder", new ObjectDecoder(Integer.MAX_VALUE, ClassResolvers.cacheDisabled(null)));
@@ -73,7 +79,7 @@ public class ConsumerInvokerHandler implements InvocationHandler {
                     });
 
             ChannelFuture fu = boot.connect("localhost", 9091).sync();
-            fu.channel().write(protocol).sync();
+            fu.channel().writeAndFlush(protocol).sync();
             fu.channel().closeFuture().sync();
         } catch (Exception e) {
             logger.error("consumer exception", e);
